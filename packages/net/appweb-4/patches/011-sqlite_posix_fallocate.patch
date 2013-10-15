@@ -1,0 +1,13 @@
+Index: appweb-4-4.4.1-0/src/deps/sqlite/sqlite3.c
+===================================================================
+--- appweb-4-4.4.1-0.orig/src/deps/sqlite/sqlite3.c	2013-10-03 15:27:56.000000000 +0000
++++ appweb-4-4.4.1-0/src/deps/sqlite/sqlite3.c	2013-10-15 14:54:30.559187498 +0000
+@@ -22745,7 +22745,7 @@
+ 
+ /* Use posix_fallocate() if it is available
+ */
+-#if !defined(HAVE_POSIX_FALLOCATE) \
++#if defined(HAVE_POSIX_FALLOCATE) \
+       && (_XOPEN_SOURCE >= 600 || _POSIX_C_SOURCE >= 200112L)
+ # define HAVE_POSIX_FALLOCATE 1
+ #endif
