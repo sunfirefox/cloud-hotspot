@@ -15,9 +15,9 @@ if [ ! -d cloud_hotspot_feed ]; then
 	mkdir -p cloud_hotspot_feed
 fi
 
-#if [ ! -d packages ]; then
-#	git clone git://git.openwrt.org/12.09/packages.git packages
-#fi
+if [ ! -d packages ]; then
+	git clone git://git.openwrt.org/12.09/packages.git packages
+fi
 
 #echo "make distclean"
 #make distclean
@@ -27,7 +27,19 @@ echo "src-link cloud_hotspot ${OPENWRT_DIR}/../cloud_hotspot_feed" > ${OPENWRT_D
 echo "src-link packages ${OPENWRT_DIR}/../packages" >> ${OPENWRT_DIR}/feeds.conf
 ${OPENWRT_DIR}/scripts/feeds update
 ${OPENWRT_DIR}/scripts/feeds install -a -p cloud_hotspot
-#${OPENWRT_DIR}/scripts/feeds install -a -p packages 
+
+if [ "$1" == "ar71xx_full" ]; then
+	${OPENWRT_DIR}/scripts/feeds install -a -p packages
+elif [ "$1" == "ar71xx_hotspot" ]; then
+	${OPENWRT_DIR}/scripts/feeds install freeradius2
+	${OPENWRT_DIR}/scripts/feeds install radiusclient-ng
+	${OPENWRT_DIR}/scripts/feeds install appweb
+	${OPENWRT_DIR}/scripts/feeds install appweb-4
+	${OPENWRT_DIR}/scripts/feeds install nginx 
+	${OPENWRT_DIR}/scripts/feeds install ejs 
+	${OPENWRT_DIR}/scripts/feeds install coova-chilli 
+	${OPENWRT_DIR}/scripts/feeds install chillispot
+fi
 
 # copy over the build config settings and the files directory
 cp ${OPENWRT_DIR}/../configs/${CONFIG_FILE_TYPE} ${OPENWRT_DIR}/.config
