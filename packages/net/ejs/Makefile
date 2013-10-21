@@ -72,8 +72,12 @@ endef
 CONFIGURE_ARGS=
 
 define Build/Compile
-	$(MAKE) -C $(PKG_BUILD_DIR) SHOW=1  ARCH=$(ARCH)\
-		$(TARGET_CONFIGURE_OPTS) \
+	$(MAKE) -C $(PKG_BUILD_DIR)  SHOW=1 CC=$(TARGET_CC) LD=$(TARGET_LD)  ARCH=$(ARCH)\
+		-f projects/ejs-linux-release.mk \
+		BIT_MPR_LOGGING=1 \
+		BIT_MPR_TRACING=1 \
+		BIT_PACK_OPENSSL=1 \
+		BIT_PACK_SQLITE=1 \
 		BLD_CC_DYN_LOAD=1
 endef
 

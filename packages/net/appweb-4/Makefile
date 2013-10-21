@@ -69,7 +69,8 @@ define Build/Compile
 		BIT_PACK_OPENSSL=1 \
 		BIT_PACK_SQLITE=1 \
 		ARCH=$(ARCH)\
-		$(TARGET_CONFIGURE_OPTS) \
+		CC=$(TARGET_CC) \
+		LD=$(TARGET_LD) \
 		BLD_CC_DYN_LOAD=1
 endef
 
