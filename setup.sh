@@ -17,6 +17,7 @@ fi
 
 if [ ! -d packages ]; then
 	git clone git://git.openwrt.org/12.09/packages.git packages
+	git clone http://github.com/brimstone/nodejs-openwrt.git packages/net/nodejs
 fi
 
 #echo "make distclean"
@@ -25,6 +26,7 @@ fi
 # add the specific cloud hotspot packages as a feed
 echo "src-link cloud_hotspot ${OPENWRT_DIR}/../cloud_hotspot_feed" > ${OPENWRT_DIR}/feeds.conf
 echo "src-link packages ${OPENWRT_DIR}/../packages" >> ${OPENWRT_DIR}/feeds.conf
+#echo "src-git  luci git://nbd.name/luci.git" >> ${OPENWRT_DIR}/feeds.conf
 ${OPENWRT_DIR}/scripts/feeds update
 ${OPENWRT_DIR}/scripts/feeds install -a -p cloud_hotspot
 

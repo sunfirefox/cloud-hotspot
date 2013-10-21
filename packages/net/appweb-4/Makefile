@@ -37,6 +37,7 @@ define Package/appweb-4
   DEPENDS:=@!avr32 +libpthread
 endef
 
+
 define Package/appweb-4/description
  Appweb-4 is a powerful, compact embedded web server designed for dynamic web
  applications.
@@ -50,6 +51,8 @@ endef
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
+		SHOW=1 \
+		-f projects/appweb-linux-release.mk \
 		BIT_EJS_DB=1 \
 		BIT_EJS_MAIL=1 \
 		BIT_EJS_MAPPER=1 \

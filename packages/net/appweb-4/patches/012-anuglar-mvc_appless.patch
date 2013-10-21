@@ -1,0 +1,13 @@
+Index: appweb-4-4.4.1-0/src/esp/proto/components/angular-mvc/client/css/app.less
+===================================================================
+--- appweb-4-4.4.1-0.orig/src/esp/proto/components/angular-mvc/client/css/app.less	2013-10-03 15:27:56.000000000 +0000
++++ appweb-4-4.4.1-0/src/esp/proto/components/angular-mvc/client/css/app.less	2013-10-21 09:05:29.393320827 +0000
+@@ -37,7 +37,7 @@
+         width: 140px;
+         color: @gray;
+         .glyphicon, i {
+-            font-size: @font-size-larger;
++            font-size: @font-size-large;
+             color: @gray;
+         }
+         .menu-item {

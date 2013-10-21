@@ -1,0 +1,13 @@
+Index: appweb-4-4.4.1-0/src/esp/proto/templates/server/controller.c
+===================================================================
+--- appweb-4-4.4.1-0.orig/src/esp/proto/templates/server/controller.c	2013-10-21 09:24:40.304628328 +0000
++++ appweb-4-4.4.1-0/src/esp/proto/templates/server/controller.c	2013-10-21 09:25:19.404468928 +0000
+@@ -3,7 +3,7 @@
+  */
+ #include "esp.h"
+ 
+-${DEFINE_CONTROLLERS}
++${ACTIONS}
+ 
+ ESP_EXPORT int esp_controller_${APP}_${NAME}(HttpRoute *route, MprModule *module) {
+     ${DEFINE_ACTIONS}    
