@@ -34,7 +34,7 @@ define Package/$(PKG_NAME)
   SUBMENU:=Web Servers/Proxies
   TITLE:=Appweb-4 Web Server
   URL:=http://www.appweb-4server.org/
-  DEPENDS:=@!avr32 +libpthread +librt
+  DEPENDS:=@!avr32 +libpthread +librt 
 endef
 
 

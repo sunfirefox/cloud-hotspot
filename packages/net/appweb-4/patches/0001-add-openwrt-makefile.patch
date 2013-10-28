@@ -20,16 +20,16 @@
 +BIT_PACK_CGI       := 1
 +BIT_PACK_EJSCRIPT  := 1
 +BIT_PACK_ESP       := 1
-+BIT_PACK_EST       := 0
++BIT_PACK_EST       := 1 
 +BIT_PACK_MATRIXSSL := 0
 +BIT_PACK_MDB       := 1
 +BIT_PACK_NANOSSL   := 0
-+BIT_PACK_OPENSSL   := 0 
++BIT_PACK_OPENSSL   := 1 
 +BIT_PACK_PCRE      := 1
 +BIT_PACK_PHP       := 0
 +BIT_PACK_SDB       := 1
 +BIT_PACK_SQLITE    := 1
-+BIT_PACK_SSL       := 0
++BIT_PACK_SSL       := 1
 +
 +ifeq ($(BIT_PACK_EST),1)
 +    BIT_PACK_SSL := 1
@@ -1495,7 +1495,7 @@
 +DEPS_65 += $(CONFIG)/bin/ejsc
 +
 +$(CONFIG)/bin/ejs.mod: $(DEPS_65)
-+#	cp package/linux/ejs.mod ./$(CONFIG)/bin/
++	$(LBIN)/ejsc --out ./$(CONFIG)/bin/ejs.mod --optimize 9 --bind --require null src/deps/ejs/ejs.es
 +endif
 +
 +#
@@ -2111,6 +2111,29 @@
 +#   installBinary
 +#
 +installBinary: $(DEPS_93)
++	$(STRIP) $(CONFIG)/bin/libmpr.so
++ifeq ($(BIT_PACK_EST),1)
++	$(STRIP) $(CONFIG)/bin/libest.so
++endif
++	$(STRIP) $(CONFIG)/bin/libmprssl.so
++	$(STRIP) $(CONFIG)/bin/makerom
++	$(STRIP) $(CONFIG)/bin/libpcre.so
++	$(STRIP) $(CONFIG)/bin/libhttp.so
++	$(STRIP) $(CONFIG)/bin/libsqlite3.so
++	$(STRIP) $(CONFIG)/bin/libappweb.so
++ifeq ($(BIT_PACK_ESP),1)
++	$(STRIP) $(CONFIG)/bin/libmod_esp.so
++endif
++	$(STRIP) $(CONFIG)/bin/libmod_cgi.so
++ifeq ($(BIT_PACK_EJSCRIPT),1)
++	$(STRIP) $(CONFIG)/bin/libejs.so
++	$(STRIP) $(CONFIG)/bin/libmod_ejs.so
++endif
++ifeq ($(BIT_PACK_PHP),1)
++	$(STRIP) $(CONFIG)/bin/libmod_php.so
++endif
++	$(STRIP) $(CONFIG)/bin/libmod_ssl.so
++	$(STRIP) $(CONFIG)/bin/libslink.so
 +	mkdir -p "$(BIT_APP_PREFIX)"
 +	mkdir -p "$(BIT_VAPP_PREFIX)"
 +	mkdir -p "$(BIT_ETC_PREFIX)"
@@ -2177,6 +2200,14 @@
 +	cp $(CONFIG)/bin/libmod_cgi.so $(BIT_VAPP_PREFIX)/bin/libmod_cgi.so
 +endif
 +ifeq ($(BIT_PACK_EJSCRIPT),1)
++	cp $(CONFIG)/bin/ejsc $(BIT_VAPP_PREFIX)/bin/ejsc
++	rm -f "$(BIT_BIN_PREFIX)/ejsc"
++	$(STRIP) $(BIT_VAPP_PREFIX)/bin/ejsc;
++	ln -s "$(BIT_VAPP_PREFIX)/bin/ejsc" "$(BIT_BIN_PREFIX)/ejsc"
++	cp $(CONFIG)/bin/ejs $(BIT_VAPP_PREFIX)/bin/ejs
++	rm -f "$(BIT_BIN_PREFIX)/ejs"
++	$(STRIP) $(BIT_VAPP_PREFIX)/bin/ejs;
++	ln -s "$(BIT_VAPP_PREFIX)/bin/ejs" "$(BIT_BIN_PREFIX)/ejs"
 +	cp $(CONFIG)/bin/libejs.so $(BIT_VAPP_PREFIX)/bin/libejs.so
 +	cp $(CONFIG)/bin/libmod_ejs.so $(BIT_VAPP_PREFIX)/bin/libmod_ejs.so
 +endif
@@ -2509,7 +2540,9 @@
 +	ln -s "$(BIT_VAPP_PREFIX)/inc/ejsByteGoto.h" "$(BIT_INC_PREFIX)/appweb/ejsByteGoto.h"
 +endif
 +ifeq ($(BIT_PACK_EJSCRIPT),1)
-+#	cp $(CONFIG)/bin/ejs.mod $(BIT_VAPP_PREFIX)/bin/ejs.mod
++	cp $(CONFIG)/bin/ejs.mod $(BIT_VAPP_PREFIX)/bin/ejs.mod
++	rm -f "$(BIT_BIN_PREFIX)/ejs.mod"
++	ln -s "$(BIT_VAPP_PREFIX)/bin/ejs.mod" "$(BIT_BIN_PREFIX)/ejs.mod"
 +endif
 +	mkdir -p "$(BIT_VAPP_PREFIX)/doc/man1"
 +	cp doc/man/appman.1 $(BIT_VAPP_PREFIX)/doc/man1/appman.1
