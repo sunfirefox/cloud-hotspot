@@ -1,0 +1,13 @@
+Index: appweb-4-4.4.1-0/src/esp/sdb.c
+===================================================================
+--- appweb-4-4.4.1-0.orig/src/esp/sdb.c	2013-10-03 15:27:56.000000000 +0000
++++ appweb-4-4.4.1-0/src/esp/sdb.c	2013-10-23 00:56:44.119491822 +0000
+@@ -309,7 +309,7 @@
+     if (!validName(tableName)) {
+         return MPR_ERR_BAD_ARGS;
+     }
+-    if (query(edi, sfmt("DROP TABLE IF EXISTS %s;", tableName)) == 0) {
++    if (query(edi, sfmt("DROP TABLE IF EXISTS %s;", tableName),NULL) == 0) {
+         return MPR_ERR_CANT_DELETE;
+     }
+     /*
